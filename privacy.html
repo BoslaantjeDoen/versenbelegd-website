@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 <meta name="theme-color" content="#e1b7ab">
 <title>Privacyverklaring · Vers & Belegd</title>
@@ -41,9 +43,14 @@
   .callout{background:var(--rose-wash);border-left:4px solid var(--rose);border-radius:10px;padding:1rem 1.2rem;font-size:.95rem;margin-bottom:1.4rem}
   footer{background:var(--ink);color:rgba(255,255,255,.7);padding:2rem 0;font-size:.86rem;text-align:center;margin-top:2rem}
   footer a{color:var(--rose)}
+  .skip-link{position:absolute;left:1rem;top:-60px;background:var(--ink);color:#fff;
+    padding:.8em 1.3em;border-radius:999px;font-weight:700;z-index:10000;
+    transition:top .2s ease}
+  .skip-link:focus{top:1rem}
 </style>
 </head>
 <body>
+<a href="#top" class="skip-link">Direct naar inhoud</a>
 <div class="parent-bar">
   <span>Onderdeel van Boslaantje Doen</span><span>·</span><a href="index.html">Terug naar de site</a>
 </div>
@@ -57,7 +64,7 @@
   </div>
 </header>
 
-<main>
+<main id="top">
   <div class="wrap">
     <h1>Privacyverklaring</h1>
     <p class="updated">Laatst bijgewerkt: 8 juli 2026</p>
@@ -98,9 +105,10 @@
     bewaren we conform de wettelijke bewaartermijn van 7 jaar.</p>
 
     <h2>Delen met derden</h2>
-    <p>We verkopen je gegevens nooit. We delen ze alleen met partijen die ons helpen onze dienst te leveren,
-    zoals onze bestelsoftware (CashDesk) en onze e-mail-/formulierdienst. Met deze partijen zijn, waar
-    vereist, verwerkersovereenkomsten gesloten.</p>
+    <p>We verkopen je gegevens nooit. We delen ze alleen met partijen die ons helpen onze dienst te leveren:
+    onze bestelsoftware (CashDesk) voor bestellingen, en FormSubmit voor het verwerken van het
+    aanvraagformulier op deze website. Met deze partijen zijn, waar vereist, verwerkersovereenkomsten
+    gesloten.</p>
 
     <h2>Cookies</h2>
     <p>Deze website plaatst zelf geen tracking- of marketingcookies. Als we in de toekomst analytische of
