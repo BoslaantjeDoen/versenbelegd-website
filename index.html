@@ -429,9 +429,91 @@
 
   .seo{background:var(--rose-wash);padding:2.6rem 0}
   .seo p{max-width:78ch;margin:0 auto;text-align:center;font-size:.94rem;line-height:1.7;color:#5a5048}
+
+  /* ---- vakantiepopup (BEHEER: zie script direct na <body>) ---- */
+  .vb-popup-overlay{
+    position:fixed;inset:0;z-index:9999;
+    background:rgba(20,14,11,.55);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+    opacity:0;visibility:hidden;
+    transition:opacity .35s var(--ease);
+  }
+  .vb-popup-overlay.is-open{opacity:1;visibility:visible}
+  @media (prefers-reduced-motion:reduce){.vb-popup-overlay{transition:none}}
+
+  .vb-popup{
+    position:relative;
+    background:var(--paper);
+    border-radius:var(--r);
+    box-shadow:var(--shadow-l);
+    max-width:460px;width:100%;
+    padding:2.2rem 2.1rem 2rem;
+    text-align:center;
+    transform:translateY(18px) scale(.97);
+    transition:transform .35s var(--ease);
+    border-top:6px solid var(--rose);
+  }
+  .vb-popup-overlay.is-open .vb-popup{transform:translateY(0) scale(1)}
+  @media (prefers-reduced-motion:reduce){.vb-popup{transition:none}}
+
+  .vb-popup-close{
+    position:absolute;top:.7rem;right:.7rem;
+    width:36px;height:36px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--rose-wash);color:var(--ink);
+    border:none;cursor:pointer;font-size:1.2rem;line-height:1;
+    transition:background .2s var(--ease);
+  }
+  .vb-popup-close:hover{background:var(--rose-mist)}
+  .vb-popup-close:focus-visible{outline:3px solid var(--rose-ink);outline-offset:2px}
+
+  .vb-popup-icon{
+    width:52px;height:52px;margin:0 auto .9rem;
+    background:var(--rose-wash) var(--bread) center/60% no-repeat;
+    border-radius:50%;
+  }
+  .vb-popup h2{font-family:var(--font-display);font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:.7rem}
+  .vb-popup p{font-size:.98rem;line-height:1.65;color:var(--ink-soft);margin-bottom:1.4rem}
+  .vb-popup .btn{width:100%;justify-content:center}
 </style>
 </head>
 <body>
+
+<!-- ============================================================
+     BEHEER — Vakantiepopup Vers & Belegd
+     Pas hier de tekst en data aan. Verder niets nodig.
+     - actief: true/false om de popup helemaal aan/uit te zetten
+     - toonVanaf / toonTotEnMet: periode waarin de popup mag verschijnen
+       (formaat YYYY-MM-DD). Na toonTotEnMet verdwijnt hij vanzelf.
+     - de popup onthoudt per toonTotEnMet-waarde of iemand 'm al wegklikte,
+       dus bij een nieuwe sluitingsperiode (nieuwe datum) verschijnt hij
+       automatisch weer, ook bij terugkerende bezoekers.
+     ============================================================ -->
+<script>
+  window.VB_BEHEER = {
+    vakantiepopup: {
+      actief: true,
+      titel: 'We zijn tijdelijk gesloten',
+      tekst: 'Vers & Belegd is gesloten van maandag 3 t/m maandag 17 augustus 2026 wegens zomervakantie. Vanaf dinsdag 18 augustus staan we weer voor je klaar met verse lunches. Bestellingen voor deze periode kunnen we helaas niet inplannen.',
+      knopTekst: 'Begrepen',
+      toonVanaf: '2026-07-20',
+      toonTotEnMet: '2026-08-17',
+      vertragingMs: 1200
+    }
+  };
+</script>
+
+<!-- ============ vakantiepopup ============ -->
+<div class="vb-popup-overlay" id="vbPopupOverlay" hidden>
+  <div class="vb-popup" role="dialog" aria-modal="true" aria-labelledby="vbPopupTitel" aria-describedby="vbPopupTekst">
+    <button type="button" class="vb-popup-close" id="vbPopupClose" aria-label="Popup sluiten">&times;</button>
+    <div class="vb-popup-icon" role="img" aria-hidden="true"></div>
+    <h2 id="vbPopupTitel"></h2>
+    <p id="vbPopupTekst"></p>
+    <button type="button" class="btn btn-primary" id="vbPopupOk"></button>
+  </div>
+</div>
 
 <!-- ============ merkband: onderdeel van Boslaantje Doen ============ -->
 <div class="parent-bar">
@@ -961,6 +1043,8 @@
 
 <script>
 
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const header = document.getElementById('header');
   const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
   onScroll();
@@ -1081,6 +1165,71 @@
   } else {
     nums.forEach(animateNum);
   }
+
+  // ---- vakantiepopup (config bovenaan bij <body>, in VB_BEHEER) ----
+  (function(){
+    const cfg = (window.VB_BEHEER || {}).vakantiepopup;
+    if (!cfg || !cfg.actief) return;
+
+    const overlay = document.getElementById('vbPopupOverlay');
+    if (!overlay) return;
+
+    const vandaag = new Date().toISOString().slice(0,10);
+    if (cfg.toonVanaf && vandaag < cfg.toonVanaf) return;
+    if (cfg.toonTotEnMet && vandaag > cfg.toonTotEnMet) return;
+
+    const storageKey = 'vbPopupGezien_' + (cfg.toonTotEnMet || 'default');
+    if (localStorage.getItem(storageKey)) return;
+
+    document.getElementById('vbPopupTitel').textContent = cfg.titel || '';
+    document.getElementById('vbPopupTekst').textContent = cfg.tekst || '';
+    const okBtn = document.getElementById('vbPopupOk');
+    okBtn.textContent = cfg.knopTekst || 'Begrepen';
+
+    const closeBtn = document.getElementById('vbPopupClose');
+    let lastFocused = null;
+
+    const getFocusable = () => Array.from(
+      overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter(el => !el.hidden);
+
+    const trapFocus = (e) => {
+      if (e.key !== 'Tab') return;
+      const items = getFocusable();
+      if (!items.length) return;
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    };
+
+    const closePopup = () => {
+      overlay.classList.remove('is-open');
+      localStorage.setItem(storageKey, '1');
+      document.removeEventListener('keydown', onKeydown);
+      const done = () => { overlay.hidden = true; if (lastFocused) lastFocused.focus(); };
+      if (reduce) done();
+      else overlay.addEventListener('transitionend', done, {once:true});
+    };
+
+    const onKeydown = (e) => {
+      if (e.key === 'Escape') closePopup();
+      else trapFocus(e);
+    };
+
+    const openPopup = () => {
+      lastFocused = document.activeElement;
+      overlay.hidden = false;
+      requestAnimationFrame(() => overlay.classList.add('is-open'));
+      document.addEventListener('keydown', onKeydown);
+      closeBtn.focus();
+    };
+
+    closeBtn.addEventListener('click', closePopup);
+    okBtn.addEventListener('click', closePopup);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closePopup(); });
+
+    window.setTimeout(openPopup, cfg.vertragingMs || 1200);
+  })();
 </script>
 </body>
 </html>
