@@ -589,7 +589,7 @@
         <h1>De vaste lunchpartner voor Veenendaal en omgeving</h1>
         <p class="lead">Verse broodjes, vergaderlunch en dagelijkse bedrijfslunch — altijd op tijd, altijd persoonlijk. Met een vast contact dat je organisatie kent.</p>
         <div class="hero-cta">
-          <a href="#bestellen" class="btn btn-primary">Vraag een lunchvoorstel</a>
+          <a href="#bestellen" class="btn btn-primary" id="heroProeflunchBtn">Vraag een gratis proeflunch aan</a>
           <a href="https://www.versenbelegd.nl/bestel" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Direct online bestellen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
@@ -1001,7 +1001,7 @@
         </div>
         <div class="contact-block">
           <div class="lbl">Bezorggebied</div>
-          <div class="area">We bezorgen in Veenendaal, Rhenen, Ede, Ederveen, Renswoude, Scherpenzeel, Overberg, Amerongen en Achterberg. Vaste levertijden afgestemd op jouw dag — ochtendpauze, lunch of vergadering.</div>
+          <div class="area">We bezorgen in Veenendaal, <a href="zakelijke-lunch-rhenen.html" style="color:var(--rose-ink)">Rhenen</a>, <a href="zakelijke-lunch-ede.html" style="color:var(--rose-ink)">Ede</a>, Ederveen, Renswoude, Scherpenzeel, Overberg, Amerongen en Achterberg. Vaste levertijden afgestemd op jouw dag — ochtendpauze, lunch of vergadering.</div>
         </div>
         <a href="tel:+31318202230" class="btn btn-rose">Bel direct 0318 – 202 230</a>
       </div>
@@ -1067,6 +1067,24 @@
 <script>
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- komend vanaf een lokale pagina met ?soort=proeflunch: optie alvast instellen ----
+  (function(){
+    const params = new URLSearchParams(location.search);
+    if (params.get('soort') === 'proeflunch') {
+      const soort = document.getElementById('soort');
+      if (soort) soort.value = 'Een proeflunch inplannen';
+    }
+  })();
+
+  // ---- hero-CTA "gratis proeflunch" zet alvast de juiste optie in het formulier ----
+  const heroProeflunchBtn = document.getElementById('heroProeflunchBtn');
+  if (heroProeflunchBtn) {
+    heroProeflunchBtn.addEventListener('click', () => {
+      const soort = document.getElementById('soort');
+      if (soort) soort.value = 'Een proeflunch inplannen';
+    });
+  }
 
   const header = document.getElementById('header');
   const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
