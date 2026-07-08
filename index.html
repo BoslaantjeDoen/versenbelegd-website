@@ -193,6 +193,10 @@
   .hero h1{font-size:clamp(2rem,4.8vw,3.15rem);margin:.7rem 0 1.1rem;max-width:15ch}
   .hero .lead{font-size:clamp(1.08rem,2.2vw,1.28rem);max-width:42ch;color:#3a2c27;font-weight:400}
   .hero-cta{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:1.9rem}
+  .hero-cta .btn-primary{animation:ctapulse 2.6s ease-in-out infinite}
+  .hero-cta .btn-primary:hover{animation:none}
+  @keyframes ctapulse{0%,100%{box-shadow:0 12px 26px -14px rgba(0,0,0,.55)}50%{box-shadow:0 12px 30px -10px rgba(0,0,0,.75)}}
+  @media (prefers-reduced-motion:reduce){.hero-cta .btn-primary{animation:none}}
 
   .hero-card{position:relative}
   .hero-photo{position:relative;width:100%;aspect-ratio:4/5;border-radius:calc(var(--r) + 4px);overflow:hidden;
@@ -203,18 +207,10 @@
   @media (prefers-reduced-motion:reduce){.hero-photo{animation:none}}
   .hero-photo.has-img{border:none;padding:0}
   .hero-photo.has-img img{width:100%;height:100%;object-fit:cover}
-  .hero-photo .ic{width:52px;height:52px;opacity:.55}
-  .hero-photo .cap{font-weight:900;color:var(--rose-ink);font-size:.95rem;max-width:22ch}
-  .hero-photo .ratio{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;font-weight:900;color:var(--rose-deep)}
-  .hero-quote{position:absolute;left:-14px;bottom:26px;background:#fff;border-radius:16px;
-    padding:.85rem 1.1rem;box-shadow:var(--shadow-m);max-width:230px;border-left:4px solid var(--rose);z-index:3}
-  .hero-quote .stars{color:var(--rose-ink);font-size:.9rem;letter-spacing:.06em}
-  .hero-quote p{font-size:.82rem;color:var(--ink-soft);line-height:1.45;margin-top:.2rem;font-style:italic}
   .hero-stamp{position:absolute;top:-26px;right:-18px;width:104px;height:107px;
     background:var(--vbstamp) center/contain no-repeat;z-index:4;
     filter:drop-shadow(0 8px 18px rgba(60,30,20,.28));transform:rotate(6deg)}
   @media(max-width:600px){.hero-stamp{width:82px;height:84px;top:-20px;right:-6px}}
-  @media(max-width:600px){.hero-quote{position:static;margin-top:1rem;max-width:none}}
 
   /* ---- trust-strip ---- */
   .trust{background:var(--ink);color:#fff}
@@ -260,7 +256,9 @@
   /* ---- merkwaarden ---- */
   .values{display:grid;gap:1.5rem}
   @media(min-width:760px){.values{grid-template-columns:repeat(3,1fr)}}
-  .value{padding:1.8rem 1.6rem;border-radius:var(--r);background:#fff;border:1px solid var(--line);position:relative}
+  .value{padding:1.8rem 1.6rem;border-radius:var(--r);background:#fff;border:1px solid var(--line);position:relative;
+    transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+  .value:hover{transform:translateY(-4px);box-shadow:var(--shadow-s)}
   .value .vnum{font-family:var(--font-display);font-size:1.3rem;color:var(--rose-ink);margin-bottom:.6rem;
     display:inline-flex;align-items:center;gap:.5rem}
   .value .vnum .roll{color:var(--rose-deep)}
@@ -270,7 +268,9 @@
   /* ---- werkwijze ---- */
   .steps{display:grid;gap:1.4rem;counter-reset:step}
   @media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr)}}
-  .step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.7rem 1.4rem;position:relative;box-shadow:var(--shadow-s)}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.7rem 1.4rem;position:relative;box-shadow:var(--shadow-s);
+    transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+  .step:hover{transform:translateY(-4px);box-shadow:var(--shadow-m)}
   .step::before{counter-increment:step;content:counter(step);
     font-family:var(--font-display);font-size:1.5rem;color:var(--ink);
     width:48px;height:48px;border-radius:50%;background:var(--rose);
@@ -312,16 +312,14 @@
   .trust-cards{display:grid;gap:1.5rem;margin-top:.5rem}
   @media(min-width:820px){.trust-cards{grid-template-columns:repeat(3,1fr)}}
   .trust-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:2rem 1.6rem;
-    text-align:center;box-shadow:var(--shadow-s)}
+    text-align:center;box-shadow:var(--shadow-s);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+  .trust-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-m)}
   .tc-num{font-family:var(--font-display);font-size:clamp(2.6rem,6vw,3.4rem);color:var(--ink);line-height:1}
   .tc-num span{color:var(--rose-ink)}
   .tc-lbl{font-weight:700;font-size:.96rem;color:#4a4038;margin-top:.7rem}
-  .review-note{text-align:center;font-size:.9rem;color:#8a7a72;margin-top:1.4rem}
-
   /* ---- stats / cijfers met count-up ---- */
-  .stats{background:var(--rose)}
-  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem 1rem;text-align:center}
-  @media(min-width:760px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+  .stats{background:var(--rose);padding:clamp(2.6rem,5vw,3.6rem) 0}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem 1rem;text-align:center;max-width:480px;margin-inline:auto}
   .stat .num{font-family:var(--font-display);font-size:clamp(2.4rem,6vw,3.4rem);color:var(--ink);line-height:1}
   .stat .lbl{font-weight:700;font-size:.95rem;color:#4a2c24;margin-top:.5rem}
 
@@ -663,7 +661,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Waarom Vers &amp; Belegd</span>
       <h2>Geen leverancier, maar een partner</h2>
-      <p>Waar anderen alleen leveren, denken wij mee. We kennen onze klanten, houden de lijnen kort en zorgen elke dag opnieuw voor kwaliteit waar je op kunt bouwen.</p>
+      <p>Waar anderen alleen leveren, denken wij mee. We kennen onze klanten en zorgen dag in, dag uit voor kwaliteit waar je op kunt bouwen.</p>
     </div>
     <div class="values">
       <div class="value reveal">
@@ -812,15 +810,13 @@
   </div>
 </section>
 
-<!-- ============ vertrouwen / staat van dienst (eerlijke tussenvorm) ============
-     LET OP: hier komen straks ECHTE klantquotes. Vervang het onderstaande
-     trust-blok zodra je 3 quotes (naam + organisatie) hebt aangeleverd. -->
+<!-- ============ vertrouwen / staat van dienst ============ -->
 <section class="alt">
   <div class="wrap">
     <div class="sec-head center reveal">
       <span class="eyebrow">Waarom organisaties voor ons kiezen</span>
       <h2>Betrouwbaar, vers en lokaal — dag in, dag uit</h2>
-      <p>We laten liever zien wat we doen dan dat we grote woorden gebruiken. Dit is waar organisaties in de regio op rekenen.</p>
+      <p>We laten liever zien wat we doen dan dat we grote woorden gebruiken.</p>
     </div>
     <div class="trust-cards reveal">
       <div class="trust-card">
@@ -836,18 +832,15 @@
         <div class="tc-lbl">dagelijks vers bereid, met een vaste contactpersoon</div>
       </div>
     </div>
-    <p class="review-note">Klantervaringen volgen binnenkort op deze plek.</p>
   </div>
 </section>
 
-<!-- ============ cijfers / stats ============ -->
+<!-- ============ cijfers / snelheid & schaal ============ -->
 <section class="stats">
   <div class="wrap">
     <div class="stats-grid reveal">
-      <div class="stat"><div class="num" data-count="20" data-suffix="+">0</div><div class="lbl">jaar Boslaantje Doen in Veenendaal</div></div>
-      <div class="stat"><div class="num" data-count="150" data-prefix="5–">0</div><div class="lbl">personen per lunch</div></div>
       <div class="stat"><div class="num" data-count="1" data-suffix=" werkdag">0</div><div class="lbl">reactietijd op je aanvraag</div></div>
-      <div class="stat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">dagelijks vers bereid</div></div>
+      <div class="stat"><div class="num" data-count="150" data-prefix="5–">0</div><div class="lbl">personen per lunch, geen probleem</div></div>
     </div>
   </div>
 </section>
@@ -865,6 +858,9 @@
       <span class="aud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10L12 5 2 10l10 5 10-5z"/></svg> Scholen</span>
       <span class="aud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M6 7v13h12V7"/></svg> Opleidingen</span>
       <span class="aud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg> Trainingslocaties</span>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="#bestellen" class="btn btn-rose">Herken je jouw organisatie? Vraag een voorstel</a>
     </div>
   </div>
 </section>
