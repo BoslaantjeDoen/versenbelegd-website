@@ -28,8 +28,12 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.versenbelegd.nl/">
 <meta property="og:image" content="https://www.versenbelegd.nl/images/hero.webp">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image:width" content="1000">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Luxe belegde broodjes van Vers en Belegd">
 <meta property="og:locale" content="nl_NL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.versenbelegd.nl/images/hero.webp">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +67,45 @@
     }
   ],
   "sameAs": ["https://www.instagram.com/versenbelegd/"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Vanaf hoeveel personen kan ik lunch bestellen?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Vergaderschotels en lunchtasjes bestel je al vanaf 5 personen. Losse belegde broodjes bestel je direct via de webshop, ongeacht aantal. Voor dagelijkse bedrijfslunch maken we een voorstel op maat van jouw team, van klein tot 150 personen." }
+    },
+    {
+      "@type": "Question",
+      "name": "Hoe snel krijg ik een reactie op mijn aanvraag?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Binnen één werkdag krijg je een helder voorstel op maat, inclusief prijs en levertijd, zonder verplichtingen." }
+    },
+    {
+      "@type": "Question",
+      "name": "Waar bezorgt Vers & Belegd?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We bezorgen in Veenendaal, Rhenen, Ede, Ederveen, Renswoude, Scherpenzeel, Overberg, Amerongen en Achterberg, met levertijden afgestemd op jouw dag." }
+    },
+    {
+      "@type": "Question",
+      "name": "Kan ik ook eenmalig bestellen, zonder vaste afspraak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Voor een eenmalige lunch of vergadering bestel je direct via de webshop. Voor een terugkerende bedrijfslunch maken we een vast voorstel met één contactpersoon." }
+    },
+    {
+      "@type": "Question",
+      "name": "Houden jullie rekening met dieetwensen of allergieën?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja, het aanbod is aan te passen aan je organisatie, dieetwensen en budget, met onder meer volkoren, spelt- en glutenvrije opties." }
+    },
+    {
+      "@type": "Question",
+      "name": "Kan ik eerst proeven voordat ik een vaste afspraak maak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja, je kunt een gratis proeflunch aanvragen. Kosteloos en vrijblijvend, zodat je zelf proeft wat je van ons mag verwachten." }
+    }
+  ]
 }
 </script>
 
@@ -495,6 +538,17 @@
   .vb-popup h2{font-family:var(--font-display);font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:.7rem}
   .vb-popup p{font-size:.98rem;line-height:1.65;color:var(--ink-soft);margin-bottom:1.4rem}
   .vb-popup .btn{width:100%;justify-content:center}
+
+  /* ---- veelgestelde vragen ---- */
+  .faq{max-width:760px;margin:0 auto}
+  .faq-item{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:.9rem;overflow:hidden}
+  .faq-item summary{list-style:none;cursor:pointer;padding:1.1rem 1.4rem;font-weight:900;color:var(--ink);
+    display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+";font-size:1.4rem;font-weight:400;color:var(--rose-ink);flex:none;transition:transform .2s var(--ease)}
+  .faq-item[open] summary::after{transform:rotate(45deg)}
+  .faq-item p{padding:0 1.4rem 1.2rem;color:#4a4038;font-size:.96rem}
+  .faq-item summary:focus-visible{outline:3px solid var(--rose-ink);outline-offset:-3px}
 </style>
 </head>
 <body>
@@ -896,6 +950,42 @@
       <span class="eyebrow">Een vertrouwd fundament</span>
       <h2>Een initiatief van Boslaantje Doen</h2>
       <p>Vers &amp; Belegd komt voort uit Boslaantje Doen — al meer dan 20 jaar een vertrouwd begrip in Veenendaal. Diezelfde ervaring, kwaliteit en lokale betrokkenheid brengen we nu naar de zakelijke lunch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ veelgestelde vragen ============ -->
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Veelgestelde vragen</span>
+      <h2>Kort antwoord op de meest gestelde vragen</h2>
+    </div>
+    <div class="faq reveal">
+      <details class="faq-item">
+        <summary>Vanaf hoeveel personen kan ik lunch bestellen?</summary>
+        <p>Vergaderschotels en lunchtasjes bestel je al vanaf 5 personen. Losse belegde broodjes bestel je direct via de webshop, ongeacht aantal. Voor dagelijkse bedrijfslunch maken we een voorstel op maat van jouw team, van klein tot 150 personen.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Hoe snel krijg ik een reactie op mijn aanvraag?</summary>
+        <p>Binnen één werkdag. Je krijgt een helder voorstel op maat, inclusief prijs en levertijd, zonder verplichtingen.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Waar bezorgen jullie?</summary>
+        <p>We bezorgen in Veenendaal, Rhenen, Ede, Ederveen, Renswoude, Scherpenzeel, Overberg, Amerongen en Achterberg, met levertijden afgestemd op jouw dag.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Kan ik ook eenmalig bestellen, zonder vaste afspraak?</summary>
+        <p>Ja. Voor een eenmalige lunch of vergadering bestel je direct via onze webshop. Voor een terugkerende bedrijfslunch maken we een vast voorstel met één contactpersoon.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Houden jullie rekening met dieetwensen of allergieën?</summary>
+        <p>Zeker. Ons aanbod is aan te passen aan je organisatie, dieetwensen en budget, met onder meer volkoren, spelt- en glutenvrije opties.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Kan ik eerst proeven voordat ik een vaste afspraak maak?</summary>
+        <p>Ja, je kunt een gratis proeflunch aanvragen. Kosteloos en vrijblijvend, zodat je zelf proeft wat je van ons mag verwachten.</p>
+      </details>
     </div>
   </div>
 </section>
